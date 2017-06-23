@@ -1,0 +1,69 @@
+﻿<h2 class="sub-header">Please Enter the Details Here to get Free HoroScope {{message}}</h2>
+<form class="form-inline">
+    <div class="form-group">
+        <label for="firstname">First Name</label>
+        <input id="firstname" class="form-control" type="text"
+               placeholder="First name" />
+    </div>
+    <div class="form-group">
+        <label for="lastname">Last Name</label>
+        <input id="lastname" class="form-control" type="text"
+               placeholder="Last name" />
+    </div>
+    <div class="form-group">
+        <label for="inputName">Name</label>
+        <input class="form-control" placeholder="Name"
+               type="text" id="inputName" />
+    </div>
+    <div class="form-group">
+        <label for="autocomplete">Places</label><input id="autocomplete" placeholder="Enter your address"
+                                                       onFocus="geolocate()" type="text" class="form-control"></input>
+        <button id="getCords" onClick="codeAddress();" class="form-control btn-danger">getLat&Long</button>
+        <input type="text" id="fill" class="form-control"/>
+    </div>
+    <!--<div class="form-group">
+        <label for="DOB">*Date of Birth</label>
+        <input class="form-control"
+               type="date" id="DOB" />
+    </div>
+    <div class="form-group">
+        <label for="Time">*Birth Time</label>
+        <input class="form-control" placeholder="hh-mm-ss"
+               type="time" id="Time" />
+    </div>-->
+    <div class="form-group">
+        <label for="Place">Birth Place</label>
+        <input class="form-control" placeholder="Birth Place"
+               type="text" id="Place" />
+    </div>
+    <br /><br />
+    <div class="form-group">
+        <label for="Male">Male/Female</label>
+        <input class="form-control" placeholder="Male/Female"
+               type="text" id="Male" />
+    </div>
+    <br /><br />
+    <div>
+        <button type="button" class="btn btn-default btn-primary">Submit here to get Free Horoscope</button>
+    </div>
+</form>
+
+<h2 class="sub-header">Different Paid Versions in HoroScope</h2>
+<form>
+    <div class="form-group">
+        <label>Full HoroScope</label>
+        <button class="btn-primary" type="submit">Click Here to Get</button>
+    </div>
+    <div class="form-group">
+        <label>Medium HoroScope</label>
+        <button class="btn-primary" type="submit">Click Here to Get</button>
+    </div>
+    <div class="form-group">
+        <label>Small HoroScope</label>
+        <button class="btn-primary" type="submit">Click Here to Get</button>
+    </div>
+    <div class="form-group">
+        <label>One Page HoroScope</label>
+        <button class="btn-primary" type="submit">Click Here to Get</button>
+    </div>
+</form>

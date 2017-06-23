@@ -1,0 +1,73 @@
+﻿
+<div>
+    <!--ng-controller="ModalDemoCtrl as $ctrl" class="modal-demo"-->
+    <div class="modal-header">
+        <button type="button" class="close" aria-hidden="true" ng-click="$ctrl.cancel()">&times;</button><a>
+            <h3 class="modal-title" id="modal-title" style="color:red">Please Provide the Details Here</h3>
+        </a>
+    </div>
+    <form name="modalForm" novalidate>
+        <div class="modal-body">
+            <div class="form-group" ng-class="{ 'has-error': modalForm.name.$invalid }">
+                <!--modalForm.name.$touched &&-->
+                <a>*Name: </a>Selected name is: <em>{{name}}</em><input name="name" ng-minlength="3"
+                                                                        ng-maxlength="8" ng-model="name" type="text" placeholder="Name" class="form-control" size="10" style="width: 50%" required />
+
+                <!--<p ng-show="modalForm.name.$invalid && !modalForm.name.$pristine" class="help-block">Your name is required.</p>-->
+                <!--<p ng-show="modalForm.name.$error.minlength">name is too short.</p>
+                <p ng-show="modalForm.name.$error.maxlength">name is too long.</p>
+                <p ng-show="modalForm.name.$error.required">Your is required.</p>-->
+                <div ng-messages="modalForm.name.$error">
+                    <p ng-message="minlength" style="color:red">Your name is too short.</p>
+                    <p ng-message="maxlength">Your name is too long.</p>
+                    <p ng-message="required" style="color:red">Your name is required.</p>
+                </div>
+
+
+            </div>
+
+
+            <div class="form-group">
+                <a>*Gender: </a>
+                <div class="radio-inline">
+                    <label><input type="radio" name="radioGroup" value="1" checked="" />Male</label>
+                </div>
+                <div class="radio-inline">
+                    <label><input type="radio" name="radioGroup" value="2" />Female</label>
+                </div>
+            </div>
+
+            <div class="input-group" ng-controller="DatepickerPopupDemoCtrl">
+                <a>*Birth Date: <a style="color:green">Selected date is: <em>{{dt | date:'fullDate' }}</em></a></a><select class="form-control" ng-model="format" ng-options="f for f in formats" style="width: 50%"><option></option></select><input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" close-text="Close" ng-required="true" alt-input-formats="altInputFormats" style="width: 50%" />
+
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                </span>
+
+            </div>
+
+            <div class="input-group" ng-controller="TimepickerDemoCtrl" style="display:inline">
+                <a>*Birth Time: </a>
+                <div>
+                    <select class="form-control" ng-model="timeformat" ng-options="f for f in timeformats" style="width: 50%;margin-top:28px;margin-right:5px;"></select>
+                </div><div>
+                    <uib-timepicker ng-model="mytime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
+                </div>
+            </div>
+
+            <div id="locationField" class="form-group">
+                <input id="autocomplete" placeholder="Enter your address"
+                       onFocus="geolocate()" type="text" class="form-control">
+                <!--<button id="getCords" onClick="codeAddress();" class="form-control btn-danger">getLat&Long</button>
+                <input type="text" id="fill" class="form-control" />-->
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-warning" type="button" ng-click="$ctrl.ok()" ng-disabled="modalForm.$invalid">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+        </div>
+    </form>
+    
+
+</div>

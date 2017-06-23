@@ -1,0 +1,724 @@
+﻿<!DOCTYPE html>
+<html ng-app="Demo" lang="en">
+<head>
+    <title>ALHome Page</title>
+    <base href="/" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="Scripts/angular.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.2.1.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.3/angular-resource.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular-route.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
+    <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <link data-require="bootstrap@3.0.3" data-semver="3.0.3" rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+    <script data-require="bootstrap@3.0.1" data-semver="3.0.1" src="//netdna.bootstrapcdn.com/bootstrap/3.0.1/js/bootstrap.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBa5E0Il4y5FKxlsPZ0sWBDYCBve4vGsTE&libraries=places&callback=initAutocomplete"
+            async defer></script>
+    <script src="Scripts/geocode.js"></script>
+    <script src="ngAutoComplete.js"></script>
+    <link href="Style.css" rel="stylesheet" />
+    <script src="Scripts/Script.js"></script>
+    <script src="Scripts/WebApicall.js"></script>
+    <style>
+        .dropbtn {
+            /*background-color: #4CAF50;*/
+            background-color: antiquewhite;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        form.tab-form-demo .tab-pane {
+            margin: 20px 20px;
+        }
+        /*.modal-dialog {width: 500px;height:100px;}*/
+        .modal .modal-dialog .modal-content {
+            background-color: #d4c484;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #eee;
+            background-color: #0480be;
+        }
+
+        .modal-footer {
+            border-bottom: 1px solid #eee;
+            background-color: #0480be;
+        }
+
+        body {
+            /*css for full size background image*/
+            /*background: url(http://p1.pichost.me/i/66/1910819.jpg) no-repeat center center fixed;*/
+            background: url(Images/1910819.jpg) no-repeat center center fixed;
+            /*-webkit-background-size: cover;
+                                   -moz-background-size: cover;
+                                   -o-background-size: cover;*/
+            background-size: 100% 100%; /*(cover) property also can be applied..but not responsive like this..*/
+            height: auto;
+            min-height: 100%;
+            background-color: #060;
+            color: #fff;
+            width: 100%;
+            overflow-x: hidden;
+            /*position: relative;
+                           margin: 0;
+                           padding-bottom: 6rem;*/
+            /*font-family: "Helvetica Neue", Arial, sans-serif;*/
+        }
+
+        .container {
+            max-width: 100%;
+            /* This will remove the outer padding, and push content edge to edge */
+            padding-right: 0;
+            padding-left: 0;
+        }
+
+        li {
+            line-height: 10px;
+        }
+
+        .navbar-form {
+            color: red;
+        }
+
+        /*.carousel-inner .item {
+                   overflow: hidden;
+                   max-width: 100%;
+                   max-height: 100%;
+               }
+
+               .carousel-inner .item img {
+                   width: 100%;
+                   min-height: 100%;
+                   max-height: none;
+               }*/
+
+        /*.carousel {
+                           max-height: 300px;
+                           height: auto;
+                           margin-left: -135px;
+                           margin-right: 300px;
+                           margin-top: -19px;
+                       }*/
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            /*background-color: #f9f9f9;*/
+            background-color: antiquewhite;
+            min-width: 120px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            float: left;
+        }
+
+            .dropdown-content a {
+                color: black;
+                padding: 8px 8px;
+                text-decoration: none;
+                display: block;
+                float: none;
+                margin-left: 1px;
+                padding-left: 2px;
+            }
+
+                .dropdown-content a:hover {
+                    background-color: #f1f1f1;
+                    outline-width: 50px;
+                }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            outline-width: 50px;
+        }
+
+        .dropdown:hover .dropbtn {
+            background-color: #3e8e41;
+        }
+
+        .full button span {
+            background-color: limegreen;
+            border-radius: 32px;
+            color: black;
+        }
+
+        .partially button span {
+            background-color: orange;
+            border-radius: 32px;
+            color: black;
+        }
+    </style>
+    
+</head>
+<body id="myPage">
+    <div class="container">
+        <!--<div class="row">-->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container-fluid">
+                <div ng-controller="CollapseDemoCtrl">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" ng-click="isNavCollapsed=!isNavCollapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                            <!--<span class="sr-only">Toggle navigation</span>-->
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <!--<a class="navbar-brand" href="HomePage" style="color:black"><span class="glyphicon glyphicon-home"></span> Home</a>-->
+                        <img src="Images/AstroLiteLogo200x60.jpg" class="img-circle" />
+                    </div>
+
+                    <div id="navbar" class="collapse navbar-collapse" uib-collapse="isNavCollapsed">
+                        <ul class="nav navbar-nav navbar-right">
+                            <!--nav nav-pills--> <!--displayed in 2-3 rows, not one below one..-->
+                            <li><a href="HoroScope" style="color:black">Prashna</a></li>
+                            <li ng-controller="ModalDemoCtrl as $ctrl"><a href="#" ng-click="$ctrl.open()" style="color:black">Shop For Softwares</a>
+                            <li class="dropdown show" dropdown dropdown-append-to-body>
+                                <a class="dropdown-toggle" data-toggle="dropdown" style="color:black">
+                                    Dropdown<span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-content">
+                                    <li><a href="#">Action 1</a></li>
+                                    <li><a href="#">Action 2</a></li>
+                                    <li><a href="#">Action 3</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="#" style="color:black"><span class="glyphicon glyphicon-earphone" style="color:black"></span> Contact Us</a></li>
+                            <li><a href="#" style="color:black"><span class="glyphicon glyphicon-info-sign" style="color:black"></span> About Us</a></li>
+                        </ul>
+
+                        <!--<form class="navbar-form navbar-right">
+                            Language
+                            <select class="form-control" data-style="btn-primary">
+                                <option>English</option>
+                                <option>Kannada</option>
+                                <option>Hindi</option>
+                                <option>Malayalam</option>
+                            </select>
+
+                        </form>-->
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <!--<div class="container">-->
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 img-responsive" style="margin-left:0; margin-right:0;">
+                <div ng-controller="CarouselDemoCtrl" id="slides_control">
+                    <div uib-carousel interval="myInterval" active="active" no-wrap="noWrapSlides">
+                        <div uib-slide ng-repeat="slide in slides" index="$index">
+                            <img ng-src="{{slide.image}}" style="margin:auto;" />
+                            <!--<div class="carousel-buttons btn-primary">
+                                <div class="col-xs-3 text-center btn-lg btn-danger"><a data-target="#imageCarousel" data-slide-to="0" href="#">Go to Slide One</a></div>
+                                <div class="col-xs-3 text-center btn-lg btn-success"><a data-target="#imageCarousel" data-slide-to="1" href="#">Go to Slide Two</a></div>
+                                <div class="col-xs-3 text-center btn-lg btn-primary"><a data-target="#imageCarousel" data-slide-to="2" href="#">Go to Slide Three</a></div>
+                                <div class="col-xs-3 text-center btn-lg btn-info"><a data-target="#imageCarousel" data-slide-to="3" href="#">Go to Slide Four</a></div>
+                            </div>-->
+                            <div class="carousel-caption">
+                                <h4>Slide {{$index+1}}</h4>
+                                <p>{{slide.text}}</p>
+                            </div>
+                        </div>
+
+                        <!--<uib-slide active="active" index="$index">
+                            <img ng-src="{{image1}}" style="margin:auto;" />
+                            <img ng-src="{{image2}}" style="margin:auto;" />
+                            <img ng-src="{{image3}}" style="margin:auto;" />
+                            <img ng-src="{{image4}}" style="margin:auto;" />
+                        </uib-slide>-->
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!--</div>-->
+        <!--<div class="leftMenu">-->
+        <div class="col-sm-3 col-md-3 col-lg-2 sidebar">
+            <!--col-xs-3 col-sm-3-->
+
+            <h4 style="color:aqua;">Services</h4>
+            <div ng-controller="AccordionDemoCtrl">
+                <script type="text/ng-template" id="group-template.html">
+                    <div class="panel-heading" style="background-color:aqua">
+                        <h4 class="panel-title" style="color:red">
+                            <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+                                <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+                                    {{heading}}
+                                </span>
+                            </a>
+                        </h4>
+                    </div>
+                    <div class="panel-collapse collapse" uib-collapse="!isOpen">
+                        <div class="panel-body" style="text-align: right" ng-transclude></div>
+                    </div>
+                </script>
+
+                <uib-accordion close-others="oneAtATime">
+                    <div uib-accordion-group class="panel-danger" is-open="status.isCustomHeader1Open">
+                        <uib-accordion-heading>
+                            <span ng-click='onParentCollapse()'>HoroScope<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeader1Open, 'glyphicon-horoscope': !status.isCustomHeader1Open}"></i></span>
+                        </uib-accordion-heading>
+                        <uib-accordion close-others="oneAtATime">
+                            <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Free HoroScope</a>
+                            <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Buy HoroScope</a>
+                            <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Buy HoroSoftWare</a>
+                            <div uib-accordion-group class="panel-default" is-open="staticAccordionsFlag.open" heading="Sample Horo">
+                                <ul>
+                                    <li><a href="#">Full</a></li>
+                                    <br />
+                                    <li><a href="#">Small</a></li>
+                                    <br />
+                                    <li><a href="#">Single Page 2</a></li>
+                                    <br />
+                                    <li><a href="#">Single Page 1</a></li>
+                                </ul>
+                            </div>
+                            <div uib-accordion-group class="panel-default" is-open="group.open" heading="{{group.title}}" ng-repeat="group in groups">
+                                <a>{{group.content}}</a>
+                            </div>
+                        </uib-accordion>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader2Open">
+                        <uib-accordion-heading>
+                            <span ng-click='onParentCollapse()'>MatchMaking<i class="glyphicon glyphicon-matchmaking pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader2Open, 'glyphicon-matchmaking': !status.isCustomHeader2Open}"></i></span>
+                        </uib-accordion-heading>
+                        <uib-accordion close-others="oneAtATime">
+                            <a class="list-group-item small modal-demo" ng-controller="ModalDemoCtrl as $ctrl" ng-click="$ctrl.open()"><span class="glyphicon glyphicon-chevron-right"></span> Simple Match(Free)</a>
+                            <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Match Report(Free)</a>
+                            <div uib-accordion-group class="panel-default" is-open="staticAccordionsFlag.open" heading="Sample Report">
+                                <a class="list-group-item small modal-demo" ng-controller="ModalDemoCtrl as $ctrl" ng-click="$ctrl.open()"><span class="glyphicon glyphicon-chevron-right"></span> Simple Match(Free)</a>
+                                <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Match Report(Free)</a>
+                                <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Match Report(Buy)</a>
+                                <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> MatchMaking Software(Buy)</a>
+                                <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Sample Report</a>
+                            </div>
+                            <uib-accordion close-others="oneAtATime">
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader3Open">
+                        <uib-accordion-heading>
+                            <a style="color:red">Muhurtham</a><i class="glyphicon glyphicon-time pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader3Open, 'glyphicon-time ': !status.isCustomHeader3Open}"></i>
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Muhurtham(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Muhurtham(Buy)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Muhurtha Software(Buy)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Sample Report</a>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader5Open">
+                        <uib-accordion-heading>
+                            Numerology<i class="glyphicon glyphicon-numerology pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader5Open, 'glyphicon-numerology ': !status.isCustomHeader5Open}"></i>
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Numerology(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Numerology Full Report(Buy)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Numerology Software(Buy)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Name Finder Based on Numerology(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Sample Report</a>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader6Open">
+                        <uib-accordion-heading>
+                            Astamangala Calculation(Full)<i class="glyphicon glyphicon-astamangala pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader6Open, 'glyphicon-astamangala ': !status.isCustomHeader6Open}"></i>
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Sample Report</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Astamangala Report(Buy)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Astamangala Software(Buy)</a>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader7Open">
+                        <uib-accordion-heading>
+                            Prashna(Q&A)<i class="glyphicon glyphicon-question-sign pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader7Open, 'glyphicon-question-sign ': !status.isCustomHeader7Open}"></i>
+                            (HanumanJyothisha)
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Prashna(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Prashna Report(Buy)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Prashna Software(Buy)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Sample Report</a>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader8Open">
+                        <uib-accordion-heading>
+                            HoroView<i class="glyphicon glyphicon-eye-open pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader8Open, 'glyphicon-eye-open ': !status.isCustomHeader8Open}"></i>
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Sample Display</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> HoroView Software(Buy)</a>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader9Open">
+                        <uib-accordion-heading>
+                            Prathamartava Guna Dosha(First Menses Time)(Free)<i class="glyphicon glyphicon-prathamavartha pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader9Open, 'glyphicon-prathamavartha ': !status.isCustomHeader9Open}"></i>
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Free Report</a>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader10Open">
+                        <uib-accordion-heading>
+                            Bharathi Panchangam(Free)<i class="glyphicon glyphicon-bharathi pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader10Open, 'glyphicon-bharathi ': !status.isCustomHeader10Open}"></i>
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Panchanga Report(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Birthday Finder(Hindu System)(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Dina Hora Finder(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Graha Moudya(Combustion)</a>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader11Open">
+                        <uib-accordion-heading>
+                            Baby Naming(Free)<i class="glyphicon glyphicon-babynaming pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader11Open, 'glyphicon-babynaming ': !status.isCustomHeader11Open}"></i>
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Name Finder(Based on B.Star)(Free)</a>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader12Open">
+                        <uib-accordion-heading>
+                            Shraddha & Maasika Etc(Free)<i class="glyphicon glyphicon-stats pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader12Open, 'glyphicon-stats ': !status.isCustomHeader12Open}"></i>
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Shraddha Date(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Maasika Dates(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Varshanthika Date(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Kaali Drishti, Dhanista Panchaka etc(Free)</a>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader13Open">
+                        <uib-accordion-heading>
+                            Gem Recommendation<i class="glyphicon glyphicon-stats pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader13Open, 'glyphicon-stats ': !status.isCustomHeader13Open}"></i>
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Gem Adviser(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Gem Recommendation Full Report(Buy)</a>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader14Open">
+                        <uib-accordion-heading>
+                            Varsha Phala(Free)<i class="glyphicon glyphicon-stats pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader14Open, 'glyphicon-stats ': !status.isCustomHeader14Open}"></i>
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Masa Margadarshi(Free)</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Dina Margadarshi(Free)</a>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader15Open">
+                        <uib-accordion-heading>
+                            Ghati Converter(Free)<i class="glyphicon glyphicon-stats pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader15Open, 'glyphicon-stats ': !status.isCustomHeader15Open}"></i>
+                        </uib-accordion-heading>
+                    </div>
+                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader16Open">
+                        <uib-accordion-heading>
+                            Buy Software<i class="glyphicon glyphicon-stats pull-right" ng-class="{'glyphicon-chevron-down': status.isCustomHeader16Open, 'glyphicon-stats ': !status.isCustomHeader16Open}"></i>
+                        </uib-accordion-heading>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> HoroScope</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Astamangala Calculation</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> MatchMaking</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Muhurtha</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Numerology</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Horoview</a>
+                        <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Prashna(Q&A)(Hanuman Jyothisha)</a>
+                    </div>
+                </uib-accordion>
+            </div>
+
+
+            <!--<ul class="nav nav-sidebar">
+                <li class="nav navbar-brand">Softwares For Astrologers</li>
+            </ul>
+                            <ul class="nav nav-sidebar">
+
+                <li>
+                    <a>
+                        For the Period
+                        <select class="selectpicker">
+                            <option>1 Year</option>
+                            <option>2 Year</option>
+                            <option>3 Year</option>
+                            <option>4 Year</option>
+                        </select>
+                    </a>
+                </li>
+                <li class="checkbox">
+
+                    <a>
+                        <label>
+                            <input type="checkbox" value="option1">
+                            HoroScope
+                        </label>
+                    </a>
+                </li>
+                <li class="checkbox">
+                    <a>
+                        <label>
+                            <input type="checkbox" value="option2">
+                            AstaMangala
+                        </label>
+                    </a>
+                </li>
+                <li class="checkbox">
+                    <a>
+                        <label>
+                            <input type="checkbox" value="option3">
+                            MatchMaking
+                        </label>
+                    </a>
+                </li>
+                <li class="checkbox">
+                    <a>
+                        <label>
+                            <input type="checkbox" value="option3">
+                            Muhurtha
+                        </label>
+                    </a>
+                </li>
+                <li class="checkbox">
+                    <a>
+                        <label>
+                            <input type="checkbox" value="option3">
+                            Numerology
+                        </label>
+                    </a>
+                </li>
+                <li class="checkbox">
+                    <a>
+                        <label>
+                            <input type="checkbox" value="option3">
+                            Prashnotthara(Q/A)
+                        </label>
+                    </a>
+                </li>
+                <li class="checkbox">
+                    <a>
+                        <label>
+                            <input type="checkbox" value="option3">
+                            Full Package
+                        </label>
+                    </a>
+                </li>
+
+                <hr />
+                <li><a>Amounts/Year<input type="text" name="txtAmount" placeholder="Rs." /></a></li>
+            </ul>-->
+            <hr />
+        </div>
+        <!--</div>-->
+        <div class="container-fluid">
+            <div class="col-md-9 col-md-offset-3 col-lg-10 col-lg-offset-2 main" style="margin-bottom:100px;">
+                <!--col-xs-9 col-xs-offset-3-->
+                <div class="grid-right">
+                    <ng-view></ng-view>
+                </div><br /><br /><br />
+
+
+
+                <!--<div ng-controller="AccordionDemoCtrl">
+                                <uib-accordion close-others="oneAtATime">
+                                    <div uib-accordion-group class="panel-info" is-open="status.isCustomHeader18Open">
+                                        <uib-accordion-heading href="#collapse2Inner2" id="acc2inner2">
+                                            Varsha Bhavishya<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeader18Open, 'glyphicon-envelope': !status.isCustomHeader18Open}"></i>
+                                        </uib-accordion-heading>
+                                        <div id="collapse2Inner2">
+                                            <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Full</a>
+                                            <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> Small</a>
+                                            <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> One Page Single Side</a>
+                                            <a class="list-group-item small"><span class="glyphicon glyphicon-chevron-right"></span> One Page Double Side</a>
+                                        </div>
+                                    </div>
+                                    <div uib-accordion-group class="panel-info">
+                                        <uib-accordion-heading href="#collapse2Inner2" id="acc2inner2">
+                                            Masa Bhavishya<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeader19Open, 'glyphicon-envelope': !status.isCustomHeader19Open}"></i>
+                                        </uib-accordion-heading>
+                                        <div class="panel-body">
+                                            <a>Hello, Namasthe</a>
+                                        </div>
+                                    </div>
+                                    <div uib-accordion-group class="panel-info">
+                                        <uib-accordion-heading href="#collapse2Inner2" id="acc2inner2">
+                                            Nithya Panchanga<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.isCustomHeader19Open, 'glyphicon-envelope': !status.isCustomHeader19Open}"></i>
+                                        </uib-accordion-heading>
+                                        <div class="panel-body">
+                                            <div class="jumbotron">
+                                                <div class="container">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-striped">
+                                                            <thead>
+                                                                <tr>
+                                                                    <td>Samvathsara {{message}}</td>
+                                                                    <td><input type="text" placeholder="Samvathsara" /></td>
+                                                                    <td><label for="Ayana">Ayana:{{message}}</label></td>
+                                                                    <td><input type="text" class="form-control" id="Ayana" placeholder="Ayana"></td>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th class="col-xs-3"><label for="Rutu"><a>Rutu:</a></label></th>
+                                                                    <th class="col-xs-3"><input type="text" class="form-control" id="Rutu" placeholder="Rutu"></th>
+                                                                    <th class="col-xs-3"><label for="Thithi"><a>Thithi:</a></label></th>
+                                                                    <th class="col-xs-3"><input type="text" class="form-control" id="Thithi" placeholder="Thithi"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <th style="width: 25%"><label for="Chaandra"><a>Chaandra Maasa:</a></label></th>
+                                                                    <th style="width: 25%"><input type="text" class="form-control" id="Chaandra" placeholder="Chaandra Maasa"></th>
+                                                                    <th style="width: 25%"><label for="Saura"><a>Saura Maasa:</a></label></th>
+                                                                    <th style="width: 25%"><input type="text" class="form-control" id="Saura" placeholder="Saura Maasa"></th>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td><label for="Vara">Vara:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Vara" placeholder="Vara"></td>
+                                                                    <td><label for="Nakshathra">Nakshathra:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Nakshathra" placeholder="Nakshathra"></td>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td><label for="Yoga">Yoga:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Yoga" placeholder="Yoga"></td>
+                                                                    <td><label for="Karana">Karana:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Karana" placeholder="Karana"></td>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td><label for="Visha">Visha:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Visha" placeholder="Visha"></td>
+                                                                    <td><label for="Amrutha">Amrutha:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Amrutha" placeholder="Amrutha"></td>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td><label for="Rahu">Rahu Kaala:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Rahu" placeholder="Rahu Kaala"></td>
+                                                                    <td><label for="Gulika">Gulika Kaala:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Gulika" placeholder="Gulika Kaala"></td>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td><label for="Yama">Yama Kantaka:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Yama" placeholder="Yama Kantaka"></td>
+                                                                    <td><label for="Dina">Dina Vishesha:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Dina" placeholder="Dina Vishesha"></td>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td><label for="Rise">Sun Rise:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Rise" placeholder="Sun Rise"></td>
+                                                                    <td><label for="Set">Sun Set:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Set" placeholder="Sun Set"></td>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td><label for="Sankramana">Sankramana:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Sankramana" placeholder="Sankramana"></td>
+                                                                    <td><label for="Amavasya">Amavasya:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Amavasya" placeholder="Amavasya"></td>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td><label for="Paurnami">Paurnami:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Paurnami" placeholder="Paurnami"></td>
+                                                                    <td><label for="Sankasta">Sankasta Chathurthi:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Sankasta" placeholder="Sankasta Chathurthi"></td>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td><label for="Bharani">Bharani:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Bharani" placeholder="Bharani"></td>
+                                                                    <td><label for="Krithike">Krithike:</label></td>
+                                                                    <td><input type="text" class="form-control" id="Krithike" placeholder="Krithike"></td>
+                                                                </tr>
+                                                            </thead>
+                                                            <thead>
+                                                                <tr>
+                                                                    <td><label for="Ekadashi">Ekadashi:</label></td>
+                                                                    <td><input type="text" class="form-control" id="usr" placeholder="Ekadashi"></td>
+                                                                </tr>
+                                                            </thead>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                </uib-accordion>
+                            </div>-->
+                <div ng-controller="mainCtrl">
+                    <uib-tabset>
+                        <uib-tab ng-repeat="t in tabs">
+                            <uib-tab-heading>{{t.title}} <i class="glyphicon glyphicon-remove" ng-click="removeTab($index)"></i></uib-tab-heading>
+                            {{t.content}}
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+                <div ng-controller="TabsDemoCtrl">
+                    <uib-tabset active="active">
+
+                        <uib-tab index="0" heading="Static title">Static content</uib-tab>
+                        <uib-tab index="$index + 1" ng-repeat="tab in tabs" heading="{{tab.title}}" disable="tab.disabled">
+                            {{tab.content}}
+                        </uib-tab>
+                        <uib-tab index="3" select="alertMe()">
+                            <uib-tab-heading>
+                                <i class="glyphicon glyphicon-bell"></i> Alert!
+                            </uib-tab-heading>
+                            I've got an HTML heading, and a select callback. Pretty cool!
+                        </uib-tab>
+                    </uib-tabset>
+                    <hr />
+                    <uib-tabset active="activePill" vertical="true" type="pills">
+                        <uib-tab index="0" heading="Vertical 1">Vertical content 1</uib-tab>
+                        <uib-tab index="1" heading="Vertical 2">Vertical content 2</uib-tab>
+                    </uib-tabset>
+                    <hr />
+                    Tabbed pills with CSS classes
+                    <uib-tabset type="pills">
+                        <uib-tab heading="Default Size">Tab 1 content</uib-tab>
+                        <uib-tab heading="Small Button" classes="btn-sm">Tab 2 content</uib-tab>
+                    </uib-tabset>
+                </div>
+
+            </div>
+        </div>
+        <!--</div>-->
+    </div>
+    <div class="col-xs-12 footer">
+        <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
+            <span class="glyphicon glyphicon-chevron-up"></span>
+        </a>
+        <p>Tech Partner: Automation Info Solutions Pvt. Ltd</p>
+        <p>Contact information: <a href="mailto:contact@astrolite.in" style="text-align:center">contact@astrolite.in</a>.</p>
+    </div>
+    <script>
+$(document).ready(function(){
+  // Initialize Tooltip
+  $('[data-toggle="tooltip"]').tooltip();
+
+  // Add smooth scrolling to all links in navbar + footer link
+  $(".footer a[href='#myPage']").on('click', function(event) {
+
+    // Make sure this.hash has a value before overriding default behavior
+    if (this.hash !== "") {
+
+      // Prevent default anchor click behavior
+      event.preventDefault();
+
+      // Store hash
+      var hash = this.hash;
+
+      // Using jQuery's animate() method to add smooth page scroll
+      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+      $('html, body').animate({
+        scrollTop: $(hash).offset().top
+      }, 900, function(){
+
+        // Add hash (#) to URL when done scrolling (default click behavior)
+        window.location.hash = hash;
+      });
+    } // End if
+  });
+})
+    </script>
+
+</body>
+</html>
